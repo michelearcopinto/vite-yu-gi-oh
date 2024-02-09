@@ -23,7 +23,11 @@ export default {
         <h4>Found {{ store.cardsArray.length }} cards</h4>
       </div>
       <div class="cards-container">
-        <AppCard />
+        <AppCard
+          v-for="(element, index) in store.cardsArray"
+          :key="index"
+          :propElement="element"
+        />
       </div>
     </div>
   </div>

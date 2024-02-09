@@ -1,24 +1,21 @@
 <script>
-import { store } from "../../store";
-
 export default {
   name: "AppCard",
-  data() {
-    return {
-      store,
-    };
-  },
+  props: ["propElement"],
 };
 </script>
 
 <template>
-  <div class="card-box" v-for="(element, index) in store.cardsArray">
+  <div class="card-box">
     <figure>
-      <img :src="element.card_images[0].image_url_small" :alt="element.name" />
+      <img
+        :src="propElement.card_images[0].image_url_small"
+        :alt="propElement.name"
+      />
     </figure>
     <div class="card-title">
-      <h3>{{ element.name }}</h3>
-      <span> {{ element.archetype }}</span>
+      <h3>{{ propElement.name }}</h3>
+      <span> {{ propElement.archetype }}</span>
     </div>
   </div>
 </template>
