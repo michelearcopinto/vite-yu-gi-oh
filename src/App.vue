@@ -2,6 +2,7 @@
 import AppHeader from "./components/header/AppHeader.vue";
 import AppSelect from "./components/main/AppSelect.vue";
 import AppGrid from "./components/main/AppGrid.vue";
+import Loader from "./components/main/Loader.vue";
 
 import { store } from "./store";
 import axios from "axios";
@@ -11,6 +12,7 @@ export default {
     AppHeader,
     AppSelect,
     AppGrid,
+    Loader,
   },
   data() {
     return {
@@ -22,21 +24,24 @@ export default {
   },
   methods: {
     requestCards() {
-      axios
-        .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0")
-        .then((result) => {
-          result.data.data.forEach((element) => {
-            if (element.archetype !== undefined) {
-              if (!store.cardsArchetypes.includes(element.archetype)) {
-                store.cardsArchetypes.push(element.archetype);
+      setTimeout(() => {
+        axios
+          .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0")
+          .then((result) => {
+            result.data.data.forEach((element) => {
+              if (element.archetype !== undefined) {
+                if (!store.cardsArchetypes.includes(element.archetype)) {
+                  store.cardsArchetypes.push(element.archetype);
+                }
               }
-            }
+            });
+
+            store.cardsArchetypes.sort();
+
+            store.cardsArray = result.data.data;
+            console.log(store.cardsArray);
           });
-
-          store.cardsArchetypes.sort();
-
-          store.cardsArray = result.data.data;
-        });
+      }, 5000);
     },
   },
 };
@@ -49,7 +54,8 @@ export default {
 
   <main>
     <AppSelect />
-    <AppGrid />
+    <AppGrid v-if="store.cardsArray.length == 20" />
+    <Loader v-else />
   </main>
 </template>
 

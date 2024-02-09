@@ -29,8 +29,9 @@ export default {
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-div {
+.container {
   padding-top: 30px;
+  width: 1600px;
 
   select {
     margin-left: 15px;
@@ -38,9 +39,5 @@ div {
     font-size: 20px;
     font-weight: 600;
   }
-}
-
-.container {
-  width: 1600px;
 }
 </style>
