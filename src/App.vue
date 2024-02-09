@@ -1,11 +1,14 @@
 <script>
-import ExampleName from "./components/ExampleName.vue";
+import AppHeader from "./components/header/AppHeader.vue";
+import AppSelect from "./components/main/AppSelect.vue";
+
 import { store } from "./store";
 import axios from "axios";
 
 export default {
   components: {
-    ExampleName,
+    AppHeader,
+    AppSelect,
   },
   data() {
     return {
@@ -28,22 +31,21 @@ export default {
 </script>
 
 <template>
-  <h1>Hello World</h1>
-  <h2>{{ store.helloValue }}</h2>
-  <h3>axios request: {{ store.randomMail }}</h3>
-  <ExampleName />
+  <header>
+    <AppHeader />
+  </header>
+
+  <main>
+    <AppSelect />
+  </main>
 </template>
 
 <style lang="scss">
 @use "./styles/general.scss";
 
-h2 {
-  font-size: 120px;
-  color: aquamarine;
-}
-
-h3 {
-  font-size: 80px;
-  color: blueviolet;
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
