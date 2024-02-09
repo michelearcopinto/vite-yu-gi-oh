@@ -16,14 +16,22 @@ export default {
     };
   },
   created() {
-    this.requestRandomMail();
+    this.requestCardsClasses();
   },
   methods: {
-    requestRandomMail() {
+    requestCardsClasses() {
       axios
-        .get("https://flynn.boolean.careers/exercises/api/random/mail")
+        .get("https://db.ygoprodeck.com/api/v7/cardinfo.php")
         .then((result) => {
-          store.randomMail = result.data.response;
+          result.data.data.forEach((element) => {
+            if (element.archetype !== undefined) {
+              if (!store.cardsArchetypes.includes(element.archetype)) {
+                store.cardsArchetypes.push(element.archetype);
+              }
+            }
+          });
+          store.cardsArchetypes.sort();
+          console.log(store.cardsArchetypes);
         });
     },
   },
@@ -47,5 +55,10 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-block: 15px;
+}
+
+main {
+  height: calc(100vh - 130px);
 }
 </style>
