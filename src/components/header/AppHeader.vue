@@ -10,7 +10,7 @@ export default {
   <figure>
     <img src="../../assets/img/logo-header.jpg" alt="logo-header" />
   </figure>
-  <h1>Yu-Gi-Oh Api</h1>
+  <h1>API</h1>
 </template>
 
 <style lang="scss" scoped>
@@ -19,5 +19,10 @@ export default {
 
 img {
   height: 100px;
+}
+
+h1 {
+  font-family: monospace;
+  font-size: 80px;
 }
 </style>
