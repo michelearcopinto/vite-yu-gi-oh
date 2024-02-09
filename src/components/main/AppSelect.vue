@@ -39,4 +39,8 @@ div {
     font-weight: 600;
   }
 }
+
+.container {
+  width: 1600px;
+}
 </style>

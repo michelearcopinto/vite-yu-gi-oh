@@ -1,6 +1,7 @@
 <script>
 import AppHeader from "./components/header/AppHeader.vue";
 import AppSelect from "./components/main/AppSelect.vue";
+import AppGrid from "./components/main/AppGrid.vue";
 
 import { store } from "./store";
 import axios from "axios";
@@ -9,6 +10,7 @@ export default {
   components: {
     AppHeader,
     AppSelect,
+    AppGrid,
   },
   data() {
     return {
@@ -16,12 +18,12 @@ export default {
     };
   },
   created() {
-    this.requestCardsClasses();
+    this.requestCards();
   },
   methods: {
-    requestCardsClasses() {
+    requestCards() {
       axios
-        .get("https://db.ygoprodeck.com/api/v7/cardinfo.php")
+        .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0")
         .then((result) => {
           result.data.data.forEach((element) => {
             if (element.archetype !== undefined) {
@@ -30,8 +32,10 @@ export default {
               }
             }
           });
+
           store.cardsArchetypes.sort();
-          console.log(store.cardsArchetypes);
+
+          store.cardsArray = result.data.data;
         });
     },
   },
@@ -45,6 +49,7 @@ export default {
 
   <main>
     <AppSelect />
+    <AppGrid />
   </main>
 </template>
 
@@ -56,9 +61,5 @@ header {
   justify-content: center;
   align-items: center;
   padding-block: 15px;
-}
-
-main {
-  height: calc(100vh - 130px);
 }
 </style>
