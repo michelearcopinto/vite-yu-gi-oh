@@ -23,7 +23,4 @@ div {
   align-items: center;
   font-size: 150px;
 }
-
-main {
-}
 </style>
