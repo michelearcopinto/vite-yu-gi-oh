@@ -36,6 +36,16 @@ export default {
     background-color: $main-color;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    figure:hover {
+      cursor: pointer;
+      filter: brightness(0.8);
+    }
 
     .card-title {
       display: flex;
@@ -43,6 +53,7 @@ export default {
       justify-content: space-between;
       padding: 10px;
       gap: 20px;
+      user-select: none;
 
       h3 {
         font-size: 15px;

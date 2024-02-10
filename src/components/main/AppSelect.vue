@@ -13,11 +13,15 @@ export default {
 
 <template>
   <div class="container">
-    <select>
-      <option value="0" disabled hidden selected>Seleziona classe</option>
+    <select
+      v-model="store.selectValue"
+      @change="console.log(store.selectValue)"
+    >
+      <option :value="null" selected>Tutte le classi</option>
+      <option value="Nessuna classe">Nessuna classe</option>
       <option
         v-for="(element, index) in store.cardsArchetypes"
-        :value="index + 1"
+        :value="element"
       >
         {{ element }}
       </option>

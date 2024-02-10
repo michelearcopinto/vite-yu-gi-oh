@@ -26,7 +26,7 @@ export default {
     requestCards() {
       setTimeout(() => {
         axios
-          .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0")
+          .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0")
           .then((result) => {
             result.data.data.forEach((element) => {
               if (element.archetype !== undefined) {
@@ -54,7 +54,7 @@ export default {
 
   <main>
     <AppSelect />
-    <AppGrid v-if="store.cardsArray.length == 20" />
+    <AppGrid v-if="store.cardsArray.length === 50" />
     <Loader v-else />
   </main>
 </template>
@@ -67,5 +67,9 @@ header {
   justify-content: center;
   align-items: center;
   padding-block: 15px;
+}
+
+main {
+  height: calc(100vh - 130px);
 }
 </style>

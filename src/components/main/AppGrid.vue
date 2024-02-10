@@ -13,6 +13,33 @@ export default {
       store,
     };
   },
+  computed: {
+    filteredCards() {
+      if (!this.store.selectValue) {
+        return this.store.cardsArray;
+      } else if (this.store.selectValue === "Nessuna classe") {
+        return this.store.cardsArray.filter(
+          (element) => element.archetype === undefined
+        );
+      } else {
+        return this.store.cardsArray.filter(
+          (element) => element.archetype === this.store.selectValue
+        );
+      }
+    },
+  },
+  methods: {
+    showCard(card) {
+      if (
+        !this.store.selectValue ||
+        this.store.selectValue === "Nessuna classe"
+      ) {
+        return true;
+      } else {
+        return card.archetype === this.store.selectValue;
+      }
+    },
+  },
 };
 </script>
 
@@ -20,11 +47,12 @@ export default {
   <div class="container">
     <div>
       <div class="info-cards">
-        <h4>Found {{ store.cardsArray.length }} cards</h4>
+        <h4>Found {{ filteredCards.length }} cards</h4>
       </div>
       <div class="cards-container">
         <AppCard
-          v-for="(element, index) in store.cardsArray"
+          v-for="(element, index) in filteredCards"
+          v-show="showCard(element)"
           :key="index"
           :propElement="element"
         />
@@ -42,6 +70,8 @@ export default {
   padding: 35px;
   background-color: white;
   width: 1600px;
+  height: calc(100% - 86px);
+  overflow: auto;
 
   .info-cards {
     background-color: black;
