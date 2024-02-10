@@ -17,7 +17,7 @@ export default {
       v-model="store.selectValue"
       @change="console.log(store.selectValue)"
     >
-      <option :value="null" selected>Tutte le classi</option>
+      <option value="Tutte le classi" selected>Tutte le classi</option>
       <option value="Nessuna classe">Nessuna classe</option>
       <option
         v-for="(element, index) in store.cardsArchetypes"

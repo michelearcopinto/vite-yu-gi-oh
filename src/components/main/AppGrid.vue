@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     filteredCards() {
-      if (!this.store.selectValue) {
+      if (this.store.selectValue === "Tutte le classi") {
         return this.store.cardsArray;
       } else if (this.store.selectValue === "Nessuna classe") {
         return this.store.cardsArray.filter(
@@ -28,18 +28,7 @@ export default {
       }
     },
   },
-  methods: {
-    showCard(card) {
-      if (
-        !this.store.selectValue ||
-        this.store.selectValue === "Nessuna classe"
-      ) {
-        return true;
-      } else {
-        return card.archetype === this.store.selectValue;
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -52,7 +41,6 @@ export default {
       <div class="cards-container">
         <AppCard
           v-for="(element, index) in filteredCards"
-          v-show="showCard(element)"
           :key="index"
           :propElement="element"
         />
