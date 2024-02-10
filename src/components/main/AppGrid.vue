@@ -82,6 +82,7 @@ export default {
     h4 {
       padding-block: 10px;
       padding-left: 10px;
+      user-select: none;
     }
   }
 
