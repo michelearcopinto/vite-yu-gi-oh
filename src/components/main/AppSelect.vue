@@ -14,6 +14,7 @@ export default {
 <template>
   <div class="container">
     <select v-model="store.selectValue" @change="$emit('setArchetype')">
+      <option value="" selected hidden>Scegli un archetipo</option>
       <option v-for="element in store.archetypesArray" :value="element">
         {{ element }}
       </option>
