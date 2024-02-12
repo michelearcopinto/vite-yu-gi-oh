@@ -25,23 +25,34 @@ export default {
   methods: {
     requestCards() {
       setTimeout(() => {
-        axios
-          .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0")
-          .then((result) => {
-            result.data.data.forEach((element) => {
-              if (element.archetype !== undefined) {
-                if (!store.cardsArchetypes.includes(element.archetype)) {
-                  store.cardsArchetypes.push(element.archetype);
-                }
+        axios.get(store.apiCardsURL).then((result) => {
+          result.data.data.forEach((element) => {
+            if (element.archetype !== undefined) {
+              if (!store.archetypesArray.includes(element.archetype)) {
+                store.archetypesArray.push(element.archetype);
               }
-            });
-
-            store.cardsArchetypes.sort();
-
-            store.cardsArray = result.data.data;
-            console.log(store.cardsArray);
+            }
           });
+
+          store.archetypesArray.sort();
+
+          store.cardsArray = result.data.data;
+          store.cardsArrayClone = store.cardsArray;
+        });
       }, 5000);
+    },
+    changeArchetype() {
+      if (store.selectValue === "Tutte le classi") {
+        store.cardsArrayClone = store.cardsArray;
+      } else if (store.selectValue === "Nessuna classe") {
+        store.cardsArrayClone = this.store.cardsArray.filter(
+          (element) => element.archetype === undefined
+        );
+      } else {
+        store.cardsArrayClone = this.store.cardsArray.filter(
+          (element) => element.archetype === this.store.selectValue
+        );
+      }
     },
   },
 };
@@ -53,8 +64,8 @@ export default {
   </header>
 
   <main>
-    <AppSelect />
-    <AppGrid v-if="store.cardsArray.length === 50" />
+    <AppSelect @setArchetype="changeArchetype" />
+    <AppGrid v-if="store.cardsArray.length === 500" />
     <Loader v-else />
   </main>
 </template>

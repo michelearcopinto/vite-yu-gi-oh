@@ -13,21 +13,6 @@ export default {
       store,
     };
   },
-  computed: {
-    filteredCards() {
-      if (this.store.selectValue === "Tutte le classi") {
-        return this.store.cardsArray;
-      } else if (this.store.selectValue === "Nessuna classe") {
-        return this.store.cardsArray.filter(
-          (element) => element.archetype === undefined
-        );
-      } else {
-        return this.store.cardsArray.filter(
-          (element) => element.archetype === this.store.selectValue
-        );
-      }
-    },
-  },
   methods: {},
 };
 </script>
@@ -36,11 +21,11 @@ export default {
   <div class="container">
     <div>
       <div class="info-cards">
-        <h4>Found {{ filteredCards.length }} cards</h4>
+        <h4>Found {{ store.cardsArrayClone.length }} cards</h4>
       </div>
       <div class="cards-container">
         <AppCard
-          v-for="(element, index) in filteredCards"
+          v-for="(element, index) in store.cardsArrayClone"
           :key="index"
           :propElement="element"
         />
