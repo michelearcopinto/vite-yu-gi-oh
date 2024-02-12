@@ -21,38 +21,34 @@ export default {
   },
   created() {
     this.requestCards();
+    this.requestArchetypes();
   },
   methods: {
     requestCards() {
+      if (store.apiCardsURL.length === store.apiCardsURLCopy.length) {
+        store.apiCardsURLCopy += "?archetype=Blue-Eyes";
+      }
+
       setTimeout(() => {
-        axios.get(store.apiCardsURL).then((result) => {
-          result.data.data.forEach((element) => {
-            if (element.archetype !== undefined) {
-              if (!store.archetypesArray.includes(element.archetype)) {
-                store.archetypesArray.push(element.archetype);
-              }
-            }
-          });
-
-          store.archetypesArray.sort();
-
+        axios.get(store.apiCardsURLCopy).then((result) => {
           store.cardsArray = result.data.data;
-          store.cardsArrayClone = store.cardsArray;
         });
-      }, 5000);
+      }, 3000);
+    },
+    requestArchetypes() {
+      axios.get(store.apiArchetypesURL).then((result) => {
+        result.data.forEach((element) => {
+          store.archetypesArray.push(element.archetype_name);
+        });
+      });
+      console.log(store.archetypesArray);
     },
     changeArchetype() {
-      if (store.selectValue === "Tutte le classi") {
-        store.cardsArrayClone = store.cardsArray;
-      } else if (store.selectValue === "Nessuna classe") {
-        store.cardsArrayClone = this.store.cardsArray.filter(
-          (element) => element.archetype === undefined
-        );
-      } else {
-        store.cardsArrayClone = this.store.cardsArray.filter(
-          (element) => element.archetype === this.store.selectValue
-        );
-      }
+      store.cardsArray = [];
+      store.apiCardsURLCopy = store.apiCardsURL;
+
+      store.apiCardsURLCopy += `?archetype=${this.store.selectValue}`;
+      this.requestCards();
     },
   },
 };
@@ -65,7 +61,7 @@ export default {
 
   <main>
     <AppSelect @setArchetype="changeArchetype" />
-    <AppGrid v-if="store.cardsArray.length === 500" />
+    <AppGrid v-if="store.cardsArray.length >= 1" />
     <Loader v-else />
   </main>
 </template>

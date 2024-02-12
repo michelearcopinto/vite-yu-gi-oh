@@ -21,11 +21,11 @@ export default {
   <div class="container">
     <div>
       <div class="info-cards">
-        <h4>Found {{ store.cardsArrayClone.length }} cards</h4>
+        <h4>Found {{ store.cardsArray.length }} cards</h4>
       </div>
       <div class="cards-container">
         <AppCard
-          v-for="(element, index) in store.cardsArrayClone"
+          v-for="(element, index) in store.cardsArray"
           :key="index"
           :propElement="element"
         />
